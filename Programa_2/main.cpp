@@ -70,7 +70,7 @@ bool contieneFragmento(const unsigned char* mensaje, int mensajeLength,
 
 int main() {
 
-    const int BUFFER_SIZE = 1000;
+    const int BUFFER_SIZE = 3000;
 
     unsigned char fragmentoBuffer[BUFFER_SIZE] = {0};
     int fragmentoLength = readFromFile("fragmento_conocido.txt", fragmentoBuffer, BUFFER_SIZE);
