@@ -67,15 +67,15 @@ bool isValidRotation(int n) {
 
 int main() {
 
-    int n = 3;
-    unsigned char K = 0xAB;
+    int n = 5;
+    unsigned char K = 0x1A;
 
     if (!isValidRotation(n)) {
         std::cout << "Error: n debe estar entre 1 y 7" << std::endl;
         return 1;
     }
 
-    const unsigned char mensaje[] = "vidaantesquemuertefuerzaantesquedebilidadviajeantesquedestino";
+    const unsigned char mensaje[] = "vidaantesquemuertefuerzaantesquedebilidadviajeantesquedestinoelprimeridealdeloscaballerosradiantes";
     int mensajeLength = sizeof(mensaje) - 1;
 
     unsigned char comprimido[200] = {0};
@@ -94,7 +94,7 @@ int main() {
     if (writeToFile("mensaje_encriptado.txt", encriptado, comprimidoLength)) {
         std::cout << "Archivo guardado: mensaje_encriptado.txt" << std::endl;
         std::cout << "Longitud: " << comprimidoLength << " bytes" << std::endl;
-        std::cout << "Parámetros usados: n=" << n << ", K=0x" << std::hex << (int)K << std::dec << std::endl;
+        std::cout << "Parametros usados: n=" << n << ", K=0x" << std::hex << (int)K << std::dec << std::endl;
     }
 
     return 0;
