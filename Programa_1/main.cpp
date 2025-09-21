@@ -75,10 +75,10 @@ int main() {
         return 1;
     }
 
-    const unsigned char mensaje[] = "AAAAAAAAAAAACCCFFFDDD";
+    const unsigned char mensaje[] = "vidaantesquemuertefuerzaantesquedebilidadviajeantesquedestino";
     int mensajeLength = sizeof(mensaje) - 1;
 
-    unsigned char comprimido[100] = {0};
+    unsigned char comprimido[200] = {0};
     int comprimidoLength = compressRLE(mensaje, mensajeLength, comprimido);
 
     std::cout << "Mensaje original: " << mensaje << std::endl;
@@ -88,7 +88,7 @@ int main() {
     }
     std::cout << std::endl;
 
-    unsigned char encriptado[100] = {0};
+    unsigned char encriptado[200] = {0};
     encryptBuffer(comprimido, comprimidoLength, encriptado, n, K);
 
     if (writeToFile("mensaje_encriptado.txt", encriptado, comprimidoLength)) {

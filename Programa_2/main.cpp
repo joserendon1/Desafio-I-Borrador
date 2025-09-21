@@ -55,8 +55,8 @@ int main() {
     int n = 3;
     unsigned char K = 0xAB;
 
-    unsigned char encriptado[100] = {0};
-    int encriptadoLength = readFromFile("mensaje_encriptado.txt", encriptado, 100);
+    unsigned char encriptado[200] = {0};
+    int encriptadoLength = readFromFile("mensaje_encriptado.txt", encriptado, 200);
 
     if (encriptadoLength <= 0) {
         std::cout << "Error: No se pudo leer el archivo o está vacío" << std::endl;
@@ -65,7 +65,7 @@ int main() {
 
     std::cout << "Archivo leído: " << encriptadoLength << " bytes" << std::endl;
 
-    unsigned char comprimido[100] = {0};
+    unsigned char comprimido[200] = {0};
     decryptBuffer(encriptado, encriptadoLength, comprimido, n, K);
 
     std::cout << "Desencriptado: ";
@@ -74,7 +74,7 @@ int main() {
     }
     std::cout << std::endl;
 
-    unsigned char mensajeFinal[100] = {0};
+    unsigned char mensajeFinal[200] = {0};
     int mensajeFinalLength = decompressRLE(comprimido, encriptadoLength, mensajeFinal);
 
     std::cout << "Mensaje final: ";
