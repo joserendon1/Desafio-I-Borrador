@@ -70,16 +70,33 @@ bool contieneFragmento(const unsigned char* mensaje, int mensajeLength,
 
 int main() {
 
-    const unsigned char fragmentoConocido[] = "fuerza";
-    const int fragmentoLength = 5;
     const int BUFFER_SIZE = 1000;
+
+    unsigned char fragmentoBuffer[BUFFER_SIZE] = {0};
+    int fragmentoLength = readFromFile("fragmento_conocido.txt", fragmentoBuffer, BUFFER_SIZE);
+
+    if (fragmentoLength <= 0) {
+        std::cout << "Error: No se pudo leer el archivo fragmento_conocido.txt" << std::endl;
+        return 1;
+    }
+
+    if (fragmentoBuffer[fragmentoLength - 1] == '\n') {
+        fragmentoLength--;
+    }
+
+    std::cout << "Fragmento conocido: '";
+    for (int i = 0; i < fragmentoLength; i++) std::cout << fragmentoBuffer[i];
+    std::cout << "' (" << fragmentoLength << " caracteres)" << std::endl;
 
     unsigned char encriptado[BUFFER_SIZE] = {0};
     int longitud = readFromFile("mensaje_encriptado.txt", encriptado, BUFFER_SIZE);
 
-    if (longitud <= 0) return 1;
+    if (longitud <= 0) {
+        std::cout << "Error: No se pudo leer el archivo mensaje_encriptado.txt" << std::endl;
+        return 1;
+    }
 
-    std::cout << "Archivo leido: " << longitud << " bytes" << std::endl;
+    std::cout << "Archivo encriptado leido: " << longitud << " bytes" << std::endl;
     std::cout << "Buscando parametros n y K..." << std::endl;
     std::cout << std::endl;
 
@@ -96,25 +113,33 @@ int main() {
             unsigned char mensajeFinal[BUFFER_SIZE] = {0};
             int longitudFinal = decompressRLE(desencriptado, longitud, mensajeFinal, BUFFER_SIZE);
 
-            if (longitudFinal > 0 && contieneFragmento(mensajeFinal, longitudFinal, fragmentoConocido, fragmentoLength)) {
-                std::cout << std::endl << "Parametros encontrados" << std::endl;
+            if (longitudFinal > 0 && contieneFragmento(mensajeFinal, longitudFinal, fragmentoBuffer, fragmentoLength)) {
+                std::cout << std::endl << "=== PARAMETROS ENCONTRADOS ===" << std::endl;
                 std::cout << "n = " << n << std::endl;
                 std::cout << "K = 0x" << std::hex << K << std::dec << " (" << K << " decimal)" << std::endl;
-                std::cout << "En el intento: " << intentos << " de " << total_combinaciones << std::endl;
+                std::cout << "Encontrado en el intento: " << intentos << " de " << total_combinaciones << std::endl;
 
-                std::cout << "Mensaje descifrado: ";
+                std::cout << std::endl << "MENSAJE DESCIFRADO COMPLETO:" << std::endl;
                 for (int i = 0; i < longitudFinal; i++) std::cout << mensajeFinal[i];
                 std::cout << std::endl;
+                std::cout << "Longitud: " << longitudFinal << " caracteres" << std::endl;
+
+                std::ofstream outputFile("mensaje_descifrado.txt");
+                outputFile.write(reinterpret_cast<const char*>(mensajeFinal), longitudFinal);
+                outputFile.close();
+                std::cout << "Mensaje guardado en: mensaje_descifrado.txt" << std::endl;
 
                 return 0;
             }
 
             if (intentos % 100 == 0) {
-                std::cout << "Intento " << intentos << "/" << total_combinaciones << std::endl;
+                std::cout << "Intentos " << intentos << "/" << total_combinaciones << " combinaciones" << std::endl;
             }
         }
     }
+
     std::cout << std::endl;
-    std::cout << "Error: No se encontraron los parametros" << std::endl;
+    std::cout << "Error: No se encontraron los parametros correctos" << std::endl;
+    std::cout << "Verifica que el fragmento conocido este correcto" << std::endl;
     return 1;
 }
