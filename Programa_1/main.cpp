@@ -67,15 +67,15 @@ bool isValidRotation(int n) {
 
 int main() {
 
-    int n = 5;
-    unsigned char K = 0x1A;
+    int n = 4;
+    unsigned char K = 0xAA;
 
     if (!isValidRotation(n)) {
         std::cout << "Error: n debe estar entre 1 y 7" << std::endl;
         return 1;
     }
 
-    const unsigned char mensaje[] = "vidaantesquemuertefuerzaantesquedebilidadviajeantesquedestinoelprimeridealdeloscaballerosradiantes";
+    const unsigned char mensaje[] = "vidaantesquemuertefuerzaantesquedebilidadviajeantesquedestino";
     int mensajeLength = sizeof(mensaje) - 1;
 
     unsigned char comprimido[200] = {0};

@@ -70,7 +70,7 @@ bool contieneFragmento(const unsigned char* mensaje, int mensajeLength,
 
 int main() {
 
-    const unsigned char fragmentoConocido[] = "viaje";
+    const unsigned char fragmentoConocido[] = "fuerza";
     const int fragmentoLength = 5;
     const int BUFFER_SIZE = 1000;
 
@@ -81,6 +81,7 @@ int main() {
 
     std::cout << "Archivo leido: " << longitud << " bytes" << std::endl;
     std::cout << "Buscando parametros n y K..." << std::endl;
+    std::cout << std::endl;
 
     int intentos = 0;
     const int total_combinaciones = 7 * 256;
@@ -113,7 +114,7 @@ int main() {
             }
         }
     }
-
+    std::cout << std::endl;
     std::cout << "Error: No se encontraron los parametros" << std::endl;
     return 1;
 }
